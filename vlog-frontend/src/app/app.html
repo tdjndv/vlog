@@ -1,0 +1,21 @@
+<nav class="top">
+  <a routerLink="/">Vlogs</a>
+
+  @if (auth.isLoggedIn()) {
+  <a routerLink="/new">New</a>
+  <span class="spacer"></span>
+  <span class="who">
+      {{ auth.username() }}
+      @if (auth.isManager()) {
+        <span class="badge">Manager</span>
+      }
+    </span>
+  <button type="button" (click)="auth.logout()">Log out</button>
+  } @else {
+  <span class="spacer"></span>
+  <a routerLink="/login">Log in</a>
+  <a routerLink="/signup">Sign up</a>
+  }
+</nav>
+
+<router-outlet />

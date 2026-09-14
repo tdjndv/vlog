@@ -1,0 +1,25 @@
+<section class="auth-wrap">
+  <h2>Log in</h2>
+
+  @if (error()) {
+  <p class="error">{{ error() }}</p>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <label>
+      Username
+      <input type="text" formControlName="username" autocomplete="username" />
+    </label>
+
+    <label>
+      Password
+      <input type="password" formControlName="password" autocomplete="current-password" />
+    </label>
+
+    <button type="submit" [disabled]="submitting()">
+      {{ submitting() ? 'Logging in…' : 'Log in' }}
+    </button>
+  </form>
+
+  <p class="alt">No account? <a routerLink="/signup">Sign up</a></p>
+</section>

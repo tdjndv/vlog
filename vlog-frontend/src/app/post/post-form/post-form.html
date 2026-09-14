@@ -1,0 +1,54 @@
+<section class="form-wrap">
+  <h2>{{ isEdit() ? 'Edit vlog' : 'New vlog' }}</h2>
+
+  @if (loading()) {
+  <p class="muted">Loading…</p>
+  }
+
+  @if (formError()) {
+  <p class="error">{{ formError() }}</p>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+
+    <label>
+      Title
+      <input type="text" formControlName="title" maxlength="200" />
+      @if (form.controls.title.touched && form.controls.title.invalid) {
+      <small class="error">Title is required (max 200 characters)</small>
+      }
+      @if (serverError('title')) {
+      <small class="error">{{ serverError('title') }}</small>
+      }
+    </label>
+
+    <label>
+      Date
+      <input type="date" formControlName="postDate" />
+      @if (form.controls.postDate.touched && form.controls.postDate.invalid) {
+      <small class="error">Pick a date</small>
+      }
+      @if (serverError('postDate')) {
+      <small class="error">{{ serverError('postDate') }}</small>
+      }
+    </label>
+
+    <label>
+      Body
+      <textarea formControlName="body" rows="10"></textarea>
+      @if (form.controls.body.touched && form.controls.body.invalid) {
+      <small class="error">Body is required</small>
+      }
+      @if (serverError('body')) {
+      <small class="error">{{ serverError('body') }}</small>
+      }
+    </label>
+
+    <div class="actions">
+      <button type="submit" [disabled]="submitting() || form.disabled">
+        {{ submitting() ? 'Saving…' : (isEdit() ? 'Save changes' : 'Publish') }}
+      </button>
+      <button type="button" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</section>

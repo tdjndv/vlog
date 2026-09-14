@@ -1,0 +1,23 @@
+:host { display: block; max-width: 40rem; margin: 0 auto; padding: 1.5rem; }
+
+form { display: flex; flex-direction: column; gap: 1rem; }
+
+label { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.85rem; font-weight: 600; }
+
+input, textarea {
+  font: inherit;
+  font-weight: normal;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+textarea { resize: vertical; }
+
+.muted { color: #666; font-size: 0.85rem; }
+.error { color: #b00020; }
+small.error { font-weight: normal; font-size: 0.75rem; }
+
+.actions { display: flex; gap: 0.75rem; }
+.actions button { padding: 0.55rem 1.1rem; font: inherit; }
+.actions button:disabled { opacity: 0.5; }

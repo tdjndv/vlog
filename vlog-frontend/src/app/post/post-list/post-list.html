@@ -1,0 +1,79 @@
+<section class="filters">
+  <h2>Vlogs</h2>
+
+  <div class="filter-row">
+    <label>
+      Author
+      <input type="text" [formControl]="usernameCtrl"
+             (input)="onSearchInput()" placeholder="username" />
+    </label>
+
+    <label>
+      Keyword
+      <input type="text" [formControl]="keywordCtrl"
+             (input)="onSearchInput()" placeholder="title or body" />
+    </label>
+
+    <label>
+      From
+      <input type="date" [formControl]="fromCtrl" (change)="onFilterChange()" />
+    </label>
+
+    <label>
+      To
+      <input type="date" [formControl]="toCtrl" (change)="onFilterChange()" />
+    </label>
+
+    <button type="button" (click)="clearFilters()">Clear</button>
+  </div>
+</section>
+
+@if (error()) {
+<p class="error">{{ error() }}</p>
+}
+
+@if (loading()) {
+<p class="muted">Loading…</p>
+} @else if (posts().length === 0) {
+<p class="muted">No vlogs match those filters.</p>
+} @else {
+<p class="muted">{{ totalElements() }} result(s)</p>
+
+<ul class="posts">
+  @for (post of posts(); track post.id) {
+  <li class="post">
+    <h3>{{ post.title }}</h3>
+
+    <p class="meta">
+      <span class="author">{{ post.authorUsername }}</span>
+      @if (post.authorRole === 'MANAGER') {
+      <span class="badge">Manager</span>
+      }
+      <span>{{ post.postDate | date:'mediumDate' }}</span>
+      @if (post.updatedAt) {
+      <span class="edited">edited</span>
+      }
+    </p>
+
+    <p class="body">{{ post.body }}</p>
+
+    @if (canModify(post.authorUsername)) {
+    <div class="post-actions">
+      <a [routerLink]="['/edit', post.id]">Edit</a>
+      <button type="button" (click)="remove(post.id)">Delete</button>
+    </div>
+    }
+  </li>
+  }
+</ul>
+
+<nav class="pager">
+  <button type="button" (click)="previousPage()" [disabled]="pageIndex() === 0">
+    Previous
+  </button>
+  <span>Page {{ pageIndex() + 1 }} of {{ totalPages() }}</span>
+  <button type="button" (click)="nextPage()" [disabled]="pageIndex() >= totalPages() - 1">
+    Next
+  </button>
+</nav>
+}
